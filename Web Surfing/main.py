@@ -11,18 +11,9 @@ from dotenv import load_dotenv
 
 load_dotenv()
 
-
-# ---------------------------------------------------------------------------
-# Setup
-# ---------------------------------------------------------------------------
-
-# Store your key as an env var: export EXA_API_KEY="your-key-here"
 exa = Exa(api_key=os.getenv("EXA_API_KEY"))
 
-
-# ---------------------------------------------------------------------------
-# Core search function
-# ---------------------------------------------------------------------------
+## finding trending stuffs
 
 def find_trending(topic: str, num_results: int = 10, days_back: int = 14):
     """
@@ -50,7 +41,7 @@ def find_trending(topic: str, num_results: int = 10, days_back: int = 14):
             "num_sentences": 3,
             "highlights_per_url": 2,
         },
-        text=False,  # we only need highlights, not full page text, for now
+        text=False,  
     )
 
     parsed = []
@@ -66,10 +57,6 @@ def find_trending(topic: str, num_results: int = 10, days_back: int = 14):
     return parsed
 
 
-# ---------------------------------------------------------------------------
-# Pretty printer (for now — later this feeds a suggestion/LLM step)
-# ---------------------------------------------------------------------------
-
 def print_trends(trends):
     if not trends:
         print("No results found.")
@@ -84,13 +71,7 @@ def print_trends(trends):
             print(f"   > {h}")
 
 
-# ---------------------------------------------------------------------------
-# Entry point
-# ---------------------------------------------------------------------------
-
 if __name__ == "__main__":
-    # For now, hardcode or take CLI input.
-    # Later: this string comes from parsed Instagram post metadata.
     topic = input("Enter a topic to find trends for: ").strip()
 
     trends = find_trending(topic, num_results=10, days_back=14)
